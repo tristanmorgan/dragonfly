@@ -1026,7 +1026,9 @@ func (w *World) close() {
 
 	w.chunkMu.Lock()
 	w.lastChunk = nil
+	w.conf.Log.Debugf("Clone chunks ready for saving...")
 	toSave := maps.Clone(w.chunks)
+	w.conf.Log.Debugf("Clone chunks done.")
 	maps.Clear(w.chunks)
 	w.chunkMu.Unlock()
 
@@ -1342,6 +1344,7 @@ func (w *World) chunkCacheJanitor() {
 				}
 			}
 			w.chunkMu.Unlock()
+			w.conf.Log.Debugf("Blowing chunks...")
 
 			for pos, c := range chunksToRemove {
 				w.saveChunk(pos, c)
