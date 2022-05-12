@@ -63,6 +63,17 @@ func (k Kelp) EncodeBlock() (name string, properties map[string]any) {
 	return "minecraft:kelp", map[string]any{"kelp_age": int32(k.Age)}
 }
 
+// CanDisplace will return true if the liquid is Water, since kelp can waterlog.
+func (Kelp) CanDisplace(b world.Liquid) bool {
+	_, water := b.(Water)
+	return water
+}
+
+// HasLiquidDrops ...
+func (Kelp) HasLiquidDrops() bool {
+	return false
+}
+
 // SideClosed will always return false since kelp doesn't close any side.
 func (Kelp) SideClosed(cube.Pos, cube.Pos, *world.World) bool {
 	return false
