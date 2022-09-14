@@ -15,9 +15,11 @@ import (
 	"github.com/google/uuid"
 	"github.com/sandertv/gophertunnel/minecraft/resource"
 	"github.com/sirupsen/logrus"
+	"math/bits"
 	"os"
 	"path/filepath"
 	"slices"
+	"time"
 )
 
 // Config contains options for starting a Minecraft server.
@@ -202,6 +204,8 @@ type UserConfig struct {
 		SaveData bool
 		// Folder is the folder that the data of the world resides in.
 		Folder string
+		// Seed specifies the psudorandom number generators seed value when used with a generator
+		Seed int64
 	}
 	Players struct {
 		// MaxCount is the maximum amount of players allowed to join the server
@@ -314,6 +318,7 @@ func DefaultConfig() UserConfig {
 	c.Server.QuitMessage = "%v has left the game"
 	c.World.SaveData = true
 	c.World.Folder = "world"
+	c.World.Seed = int64(bits.Reverse64(uint64(time.Now().Unix())))
 	c.Players.MaximumChunkRadius = 32
 	c.Players.SaveData = true
 	c.Players.Folder = "players"
