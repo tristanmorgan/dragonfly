@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	df_commands "github.com/andreashgk/df-commands"
 	"github.com/df-mc/dragonfly/server"
 	"github.com/df-mc/dragonfly/server/player/chat"
 	"github.com/pelletier/go-toml"
@@ -22,6 +23,7 @@ func main() {
 	}
 
 	srv := conf.New()
+	df_commands.RegisterAll()
 	srv.CloseOnProgramEnd()
 
 	srv.Listen()
